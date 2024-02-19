@@ -3,13 +3,13 @@ services:
     gpt-pilot:
         environment:
             # OPENAI/AZURE/OPENROUTER
-            - ENDPOINT=OPENAI
-            - OPENAI_API_KEY=
+            # - ENDPOINT=OPENAI
+            # - OPENAI_API_KEY=
             # - AZURE_API_KEY=
-            # - AZURE_ENDPOINT=
+            # - AZURE_ENDPOINT=https://ai-cdp-dev.deno.dev/v2/inference/deployments/d76615bc07d01db5
             # - OPENROUTER_API_KEY=
             # In case of Azure endpoint, change this to your deployed model name
-            - MODEL_NAME=gpt-4
+            # - MODEL_NAME=gpt-4-32k
             - MAX_TOKENS=8192
             - DATABASE_TYPE=postgres
             - DB_NAME=pilot
@@ -19,6 +19,8 @@ services:
             - DB_PASSWORD=pilot
             # Folders which shouldn't be tracked in workspace (useful to ignore folders created by compiler)
             # IGNORE_PATHS=folder1,folder2
+        env_file:
+            - pilot/.env
         volumes:
             - ~/gpt-pilot-workspace:/usr/src/app/workspace
         build:
@@ -27,6 +29,7 @@ services:
         ports:
             - "7681:7681"
             - "3000:3000"
+        command: python db_init.py
         depends_on:
             postgres:
                 condition: service_healthy
