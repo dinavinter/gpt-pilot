@@ -3,14 +3,15 @@ services:
     gpt-pilot:
         environment:
             # OPENAI/AZURE/OPENROUTER
-            - ENDPOINT=OPENAI
-            - OPENAI_API_KEY=
-            # - AZURE_API_KEY=
-            # - AZURE_ENDPOINT=
+            - ENDPOINT=AZURE
+        # - OPENAI_API_KEY=
+        # - AZURE_API_KEY=
+            - AZURE_ENDPOINT=https://ai-cdp-dev.deno.dev/v2
+            - GIGYA_API_KEY=4_qIcTAyHP_B9dqBgvCutZxA
             # - OPENROUTER_API_KEY=
             # In case of Azure endpoint, change this to your deployed model name
-            - MODEL_NAME=gpt-4
-            - MAX_TOKENS=8192
+            - MODEL_NAME=gpt-4-32k
+            - MAX_TOKENS=32000
             - DATABASE_TYPE=postgres
             - DB_NAME=pilot
             - DB_HOST=postgres
@@ -21,6 +22,8 @@ services:
             # IGNORE_PATHS=folder1,folder2
         volumes:
             - ~/gpt-pilot-workspace:/usr/src/app/workspace
+        env_file:
+            - .env
         build:
             context: .
             dockerfile: Dockerfile
