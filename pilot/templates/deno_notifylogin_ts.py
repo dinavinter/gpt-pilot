@@ -16,6 +16,7 @@ DENO_NOTIFY_LOGIN_TS = {
     "summary": "\n".join([
         "* initial Deno setup",
         "* gigya-based authentication using gigya notifyLogin API",
+        "* you dont need to install dependencies with deno, it will be downloaded automatically",
         "* Oak framework for HTTP server",
         "* config loading from environment using Deno.env",
     ]),

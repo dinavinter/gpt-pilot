@@ -1,0 +1,1 @@
+ create a client application using vitejs , the app should use gigya login and when the user is loggedin it should display him the jwt from accounts.getJWT and a profile page

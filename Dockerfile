@@ -15,7 +15,10 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | b
     && . "$NVM_DIR/nvm.sh" \
     && nvm install node \
     && nvm use node
-
+RUN wget -qO- https://get.pnpm.io/install.sh | ENV="$HOME/.bashrc" SHELL="$(which bash)" bash -
+RUN curl -fsSL https://deno.land/install.sh | bash
+ENV DENO_INSTALL="/root/.deno"
+ENV PATH="$DENO_INSTALL/bin:$PATH"
 COPY scripts scripts
 WORKDIR /usr/src/app
 COPY . .

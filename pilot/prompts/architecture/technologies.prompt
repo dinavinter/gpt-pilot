@@ -46,18 +46,32 @@ Output only your response in JSON format like in this example, without other com
             "required_locally": true
         },
         {
-            "name": "MongoDB",
-            "description": "NoSQL database. If you don't want to install MongoDB locally, you can use a cloud version such as MongoDB Atlas.",
-            "test": "mongosh --version",
-            "required_locally": false
+            "name": "deno",
+            "description": "A secure runtime for JavaScript and TypeScript. This is required to be able to run the app you're building.",
+            "test": "deno --version",
+            "required_locally": true
         },
+        {
+            "name": "MongoDB",
+            "description": "A NoSQL database. This is required to be able to run the app you're building.",
+            "test": "mongo --version",
+            "required_locally": true
+        },
+        {
+            "name": "nx",
+            "description": "Extensible Dev Tools for Monorepos. This is required to be able to run the app you're building.",
+            "test": "nx --version",
+            "required_locally": true
+        } 
+        
         ...
     ],
     "package_dependencies": [
         {
             "name": "express",
             "description": "Express web server for Node"
-        },
+        } 
+        
         ...
     ],
     "template": "name of the project template to use" // or null if you decide not to use a project template

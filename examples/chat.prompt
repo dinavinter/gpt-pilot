@@ -1,0 +1,4 @@
+create a chat room page with gigya authentication
+room can be accessed only by registered users
+chat messages should be stored in a memory db
+last 5 messages should be stored in the user data (in gigya account at data.messages) and displayed when the user logs in again
