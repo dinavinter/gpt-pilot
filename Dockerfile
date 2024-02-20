@@ -26,4 +26,5 @@ RUN pip install -r requirements.txt
 WORKDIR /usr/src/app/pilot
 
 EXPOSE 7681
+ENTRYPOINT [ "scripts/secret-to-env.sh" ]
 CMD ["ttyd", "bash"]

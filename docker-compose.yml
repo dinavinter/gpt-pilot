@@ -2,6 +2,7 @@ version: '3'
 services:
     gpt-pilot:
         image: ghr.io/dinavinter/gpt-pilot
+
         environment:
             # OPENAI/AZURE/OPENROUTER
             - ENDPOINT=AZURE
@@ -23,8 +24,8 @@ services:
             # IGNORE_PATHS=folder1,folder2
         volumes:
             - ~/gpt-pilot-workspace:/usr/src/app/workspace
-        env_file:
-            - .env
+        secrets:
+          - AZURE_API_KEY
         build:
             context: .
             dockerfile: Dockerfile
@@ -49,3 +50,8 @@ services:
             interval: 30s
             timeout: 10s
             retries: 3
+
+secrets:
+    AZURE_API_KEY:
+        file: secrets/azure-api-key.env
+    
