@@ -16,6 +16,7 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | b
     && nvm install node \
     && nvm use node
 
+COPY scripts scripts
 WORKDIR /usr/src/app
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
@@ -26,5 +27,4 @@ RUN pip install -r requirements.txt
 WORKDIR /usr/src/app/pilot
 
 EXPOSE 7681
-ENTRYPOINT [ "scripts/secret-to-env.sh" ]
 CMD ["ttyd", "bash"]
