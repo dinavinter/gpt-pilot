@@ -6,13 +6,18 @@ from logger.logger import logger
 from utils.exit import trace_code_event
 
 from .node_express_mongoose import NODE_EXPRESS_MONGOOSE
+from .vanilla_js import VANILLA_JS
+from .vitejs_ts import VITE_TS
+from .react_ts import TYPESCRIPT_REACT
 from .render import Renderer
 
 if TYPE_CHECKING:  # noqa
     from helpers.Project import Project  # noqa
 
 PROJECT_TEMPLATES = {
-    "node_express_mongoose": NODE_EXPRESS_MONGOOSE,
+    "vanilla_js": VANILLA_JS,
+    "vite_ts": VITE_TS,
+    "react_ts": TYPESCRIPT_REACT
 }
 
 

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gigya Auth jQuery Example</title>
+    <script src="https://cdns.gigya.com/js/gigya.js?YOUR_API_KEY"></script>
+</head>
+<body>
+<button id="login">Log in</button>
+<button id="logout">Log out</button>
+<p id="user"></p>
+<pre id="token" style="white-space: pre-wrap"></pre>
+<!--suppress JSUnresolvedLibraryURL -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script>
+    const DEFAULT_FIELDS = 'firstName, lastName, email';
+
+    function clearCredentials(){
+        $('#user').text('Not logged in');
+        $('#token').text('');
+    }
+
+    function displayCredentials(user, token){
+        $('#user').text(user);
+        $('#token').text(token);
+    }
+
+    $('#login').click(function(){
+        // noinspection JSUnresolvedVariable,JSUnresolvedFunction
+        window.gigya.accounts.showScreenSet({ screenSet: 'Default-RegistrationLogin' });
+    });
+
+    $('#logout').click(function(){
+        // noinspection JSUnresolvedVariable,JSUnresolvedFunction
+        window.gigya.accounts.logout({
+            callback: function(e){
+                if (e.errorCode === 0) {
+                    clearCredentials();
+                }
+            }
+        });
+    });
+
+
+    // noinspection JSUnresolvedVariable,JSUnresolvedFunction
+    window.gigya.socialize.addEventHandlers({
+        onLogin: function(e){
+            // noinspection JSUnresolvedVariable,JSUnresolvedFunction
+            window.gigya.accounts.getJWT({
+                fields: DEFAULT_FIELDS,
+                callback: function(arg){
+                    if (arg.errorCode === 0) {
+                        // noinspection JSUnresolvedVariable
+                        displayCredentials(e.user.nickname, arg.id_token);
+                    }
+                },
+            });
+        },
+    });
+
+    // noinspection JSUnresolvedVariable,JSUnresolvedFunction
+    window.gigya.accounts.getAccountInfo({
+        callback: function(e){
+            if (e.errorCode === 0) {
+                // noinspection JSUnresolvedVariable,JSUnresolvedFunction
+                window.gigya.accounts.getJWT({
+                    fields: DEFAULT_FIELDS,
+                    callback: function(arg){
+                        if (arg.errorCode === 0) {
+                            // noinspection JSUnresolvedVariable
+                            displayCredentials(e.profile.firstName + ' ' + e.profile.lastName, arg.id_token);
+                        }
+                    },
+                });
+            } else {
+                clearCredentials();
+            }
+        },
+    });
+</script>
+</body>
+</html>

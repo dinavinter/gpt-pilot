@@ -1,0 +1,180 @@
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #3178c6aa);
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+.centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.padding-top {
+  padding-top: 10rem;
+}
+
+.vcontainer {
+  flex-direction: column;
+}
+
+.hcontainer{
+  flex-direction: row;
+  display: flex; 
+  justify-content: space-between;
+  
+ }
+
+.left {
+  margin-right: 20rem;
+  justify-content: left;
+  position: relative; 
+  
+   /*margin-outside: 20rem;*/
+  /*padding: 20rem;*/
+}
+ 
+
+
+#navbar {
+  font-size: 1.4rem;
+  position: fixed;
+  z-index: 1;  
+  top: 0; /* Stay at the top */
+  left: 0;
+  
+  width: 100%;
+  overflow-y: hidden; /* Disable horizontal scroll */
+  padding-left: 20px;
+}
+
+
+
+#navbar>* {
+  padding: 0 2rem 0 0
+} 
+@media(min-width: 60rem) {
+  #navbar {
+    max-width:100%
+  }
+
+  #navbar>* {
+    display: inline-block;
+    margin-left: 1.2rem;
+    padding: 0 1rem
+  }
+
+  #navbar:before {
+    display: inline-block
+  }
+
+  
+}
+
+
+.wrap-collabsible {
+  margin-bottom: 1.2rem 0;
+}
+
+input[type='checkbox'] {
+  display: none;
+}
+
+.lbl-toggle {
+  position: fixed;
+  z-index: 1;
+  
+  display: block; 
+  text-transform: uppercase;
+  text-align: center;
+
+  padding: 1rem;
+
+ 
+  cursor: pointer;
+
+  border-radius: 7px;
+  transition: all 0.25s ease-out;
+}
+
+.lbl-toggle:hover {
+  color: #7C5A0B;
+}
+
+.lbl-toggle::before {
+  content: ' ';
+  display: inline-block;
+
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 5px solid currentColor;
+  vertical-align: middle;
+  margin-right: .7rem;
+  transform: translateY(-2px);
+
+  transition: transform .2s ease-out;
+}
+
+.toggle:checked + .lbl-toggle::before {
+  transform: rotate(90deg) translateX(-3px);
+}
+
+.collapsible-content {
+  max-height: 0px;
+  overflow: hidden;
+  transition: max-height .25s ease-in-out;
+}
+
+.toggle:checked + .lbl-toggle + .collapsible-content {
+  max-height: 100vh;
+}
+
+.toggle:checked + .lbl-toggle {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.collapsible-content .content-inner {
+  background: rgba(100, 0, 0, .01);
+  border-bottom: 1px solid rgba(150, 70, 0, .1);
+  border-bottom-left-radius: 7px;
+  border-bottom-right-radius: 7px;
+  padding: .5rem 1rem;
+}
+
+.left {
+  margin-right: 20rem;
+  justify-content: left;
+  position: fixed; 
+  left: 0;
+  top: 0;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  z-index: 1;
+  max-width: 40rem;
+  
+   /*margin-outside: 20rem;*/
+  /*padding: 20rem;*/
+}

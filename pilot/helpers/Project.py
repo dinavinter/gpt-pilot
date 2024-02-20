@@ -37,6 +37,20 @@ from utils.task import Task
 from utils.utils import remove_lines_with_string
 
 
+class TestSite:
+    def __init__(self):
+        self.domain = "gigya.eu1.com",
+        self.apiKey = "4_1zeDwL2G6qXsS1wRbOrTeA"
+
+
+class Site:
+    def __init__(self,
+                 apikey,
+                 domain="gigya.com"):
+        self.domain = domain,
+        self.apiKey = apikey
+
+
 class Project:
     def __init__(
         self,
@@ -48,7 +62,7 @@ class Project:
         Initialize a project.
 
         Args:
-            args (dict): Project arguments - app_id, (app_type, name), user_id, email, password, step
+            args (dict): Project arguments - app_id, (app_type, name), user_id, email, password, step, apikey, domain.
             name (str, optional): Project name. Default is None.
             description (str, optional): Project description. Default is None.
             user_stories (list, optional): List of user stories. Default is None.
@@ -57,6 +71,9 @@ class Project:
             development_plan (str, optional): Development plan. Default is None.
             current_step (str, optional): Current step in the project. Default is None.
         """
+        site = Site(args["apikey"], args["domain"]) if "apikey" in args else TestSite()
+        args["apikey"] = site.apiKey
+        args["domain"] = site.domain
         self.args = args
         self.llm_req_num = 0
         self.command_runs_count = 0
@@ -89,7 +106,6 @@ class Project:
         self.project_template = None
         self.development_plan = None
         self.dot_pilot_gpt = DotGptPilot(log_chat_completions=True)
-
         if os.getenv("AUTOFIX_FILE_PATHS", "").lower() in ["true", "1", "yes"]:
             File.update_paths()
 

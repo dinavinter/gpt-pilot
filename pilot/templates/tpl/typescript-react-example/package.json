@@ -1,0 +1,31 @@
+{
+  "name": "gigya-auth-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Erland Glad Solstrand <erland.glad.solstrand@eggsdesign.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "@types/styled-components": "latest",
+    "@typescript-eslint/eslint-plugin": "latest",
+    "@typescript-eslint/parser": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-prettier": "latest",
+    "eslint-plugin-react": "latest",
+    "parcel-bundler": "latest",
+    "prettier": "latest",
+    "styled-components": "latest",
+    "typescript": "latest"
+  },
+  "scripts": {
+    "start": "parcel src/index.html --port 3000 --https"
+  }
+}

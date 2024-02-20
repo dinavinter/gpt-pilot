@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Gigya Auth Vanilla JS Example</title>
+    <script src="https://cdns.gigya.com/js/gigya.js?apikey=YOUR_API_KEY"></script>
+</head>
+<body>
+<header>
+    <button id="btn-login" type="button">Log in using Gigya</button>
+    <button id="btn-logout" type="button">Log out</button>
+    <div id="user-name"></div>
+    <pre id="id-token" style="white-space: pre-wrap"></pre>
+</header>
+<!--suppress JSUnresolvedVariable, JSUnresolvedFunction, JSUnusedGlobalSymbols-->
+<script>
+    (function(){
+        const btnLogin = document.getElementById('btn-login');
+        const btnLogout = document.getElementById('btn-logout');
+        const userName = document.getElementById('user-name');
+        const idToken = document.getElementById('id-token');
+
+        btnLogin.addEventListener('click', function(){
+            window.gigya.accounts.showScreenSet({ screenSet: 'Default-RegistrationLogin' })
+        });
+
+        btnLogout.addEventListener('click', function(){
+            window.gigya.accounts.logout({
+                callback: function(e){
+                    if (e.errorCode === 0) {
+                        userName.innerText = 'Not logged in';
+                        idToken.innerText = '';
+                    }
+                }
+            })
+        });
+
+        window.gigya.socialize.addEventHandlers({
+            onLogin: function(e){
+                window.gigya.accounts.getJWT({
+                    fields: 'firstName, lastName, email',
+                    callback: function(arg){
+                        if (arg.errorCode === 0) {
+                            userName.innerText = e.user.nickname;
+                            idToken.innerText = arg.id_token;
+                        }
+                    },
+                });
+            },
+        });
+
+        window.gigya.accounts.getAccountInfo({
+            callback: function(e){
+                if (e.errorCode === 0) {
+                    window.gigya.accounts.getJWT({
+                        fields: 'firstName, lastName, email',
+                        callback: function(arg){
+                            if (arg.errorCode === 0) {
+                                userName.innerText = e.profile.firstName + ' ' + e.profile.lastName;
+                                idToken.innerText = arg.id_token;
+                            }
+                        },
+                    });
+                } else {
+                    userName.innerText = 'Not logged in';
+                    idToken.innerText = '';
+                }
+            },
+        });
+
+    })();
+</script>
+</body>
+</html>
