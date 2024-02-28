@@ -1,0 +1,158 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gpt-pilot-config
+data:
+  ENDPOINT: "AZURE"
+  AZURE_ENDPOINT: "https://ai-cdp-dev.deno.dev/v2"
+  GIGYA_API_KEY: "4_qIcTAyHP_B9dqBgvCutZxA"
+  MODEL_NAME: "gpt-4-32k"
+  MAX_TOKENS: "32000"
+  DATABASE_TYPE: "postgres"
+  DB_NAME: "pilot"
+  DB_HOST: "postgres"
+  DB_PORT: "5432"
+  DB_USER: "pilot"
+  DB_PASSWORD: "pilot"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpt-pilot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gpt-pilot
+  template:
+    metadata:
+      labels:
+        app: gpt-pilot
+    spec:
+      imagePullSecrets:
+        - name: ghcr.io
+
+      containers:
+        - name: gpt-pilot
+          image: ghcr.io/dinavinter/gpt-pilot
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 7681
+            - containerPort: 3000
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: gpt-pilot-config
+            - secretRef:
+                name: gpt-pilot-api-key
+          volumeMounts:
+            - mountPath: /usr/src/app/workspace
+              name: workspace-volume
+            - mountPath: /usr/src/app/scripts
+              name: scripts-volume
+      volumes:
+        - name: workspace-volume
+          hostPath:
+            path: /home/<your-user>/gpt-pilot-workspace
+        - name: scripts-volume
+          hostPath:
+            path: /home/<your-user>/scripts
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gpt-pilot
+spec:
+  selector:
+    app: gpt-pilot
+  ports:
+    - protocol: TCP
+      port: 7681
+      targetPort: 7681
+      name: terminal 
+    - protocol: TCP
+      port: 8080
+      targetPort: 8000
+      name: http-app
+    - protocol: TCP
+      port: 4343
+      targetPort: 443
+      name: https-app
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec: 
+      containers:
+        - name: postgres
+          image: postgres
+          imagePullPolicy: Always
+          env:
+            - name: POSTGRES_USER
+              value: "pilot"
+            - name: POSTGRES_PASSWORD
+              value: "pilot"
+            - name: POSTGRES_DB
+              value: "pilot"
+     
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  selector:
+    app: postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auto-gen
+  namespace: pilots
+  labels:
+      app: auto-gen
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auto-gen
+  template:
+    metadata:
+      labels:
+        app: gpt-pilot
+    spec:
+      imagePullSecrets:
+        - name: ghcr.io
+
+      containers:
+        - name: gpt-pilot
+          image: ghcr.io/dinavinter/ghcr.io/dinavinter/autogen-studio-container:latest
+          imagePullPolicy: Always
+          
+          
+ 

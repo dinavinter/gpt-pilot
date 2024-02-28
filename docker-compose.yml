@@ -1,7 +1,7 @@
 version: '3'
 services:
     gpt-pilot:
-        image: ghr.io/dinavinter/gpt-pilot
+        image: ghcr.io/dinavinter/gpt-pilot
         environment:
             # OPENAI/AZURE/OPENROUTER
             - ENDPOINT=AZURE
