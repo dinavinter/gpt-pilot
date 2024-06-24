@@ -22,7 +22,7 @@ services:
         env_file:
             - pilot/.env
         volumes:
-            - ~/gpt-pilot-workspace:/usr/src/app/workspace
+            - ~/gpt-pilot-workspace:/usr/src/app/workspace 
         build:
             context: .
             dockerfile: Dockerfile
