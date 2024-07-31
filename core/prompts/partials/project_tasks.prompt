@@ -1,0 +1,27 @@
+{# This is actually creation of tasks and not epics. Reason why this prompt uses word "epic" instead of "task" is that LLM gives very detailed description and creates very big plan if we ask him to create tasks. When asked to create epics he focuses on much bigger picture and gives high level description which is what we want. #}
+# Rules for creating epics
+---start_of_rules_for_creating_epics---
+
+## Rule #1
+Every epic must have only coding involved. There should never be a epic that is only testing or ensuring something works. There shouldn't be a epic for researching, deployment, writing documentation, testing or anything that is not writing the actual code. Testing if app works will be done as part of each epic.
+
+## Rule #2
+This rule applies to epic scope.
+Each epic must be deliverable that can be verified by non technical user. Each epic must have frontend interface, backend implementation, and a way for non technical user to test epic. Do not use words "backend" and "frontend" in epic descriptions. All details mentioned in project description must be fully implemented once all epics are finished.
+
+## Rule #3
+This rule applies to the number of epics you will create.
+Every app should have different number of epics depending on complexity. Think epic by epic and create the minimum number of epics that are needed to develop this app.
+Simple apps should have only 1 epic.
+Medium complexity apps should have 2-5 epics.
+Very complex apps should have 4-8 epics.
+
+## Rule #4
+This rule applies to writing epic 'description'.
+Every epic must have a clear, high level, and short 1 sentence 'description'. It must be very clear so that even non technical users who are reviewing it and just moved to this project can understand what is goal for the epic.
+
+## Rule #5
+This rule applies to order of epics.
+Epics will be executed in same order that you output them. You must order them in a logical way so that epics that depend on other functionalities are implemented in later stage.
+
+---end_of_rules_for_creating_epics---
